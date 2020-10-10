@@ -1,0 +1,1 @@
+FLASK_APP=Covid-and-Crime-in-NYC/app.py flask run
