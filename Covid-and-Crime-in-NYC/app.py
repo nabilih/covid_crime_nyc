@@ -7,7 +7,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 # Add your Postgres password into the config.py file
-from config import password
+#from config import password
 from flask_cors import CORS
 
 
@@ -33,7 +33,7 @@ app = Flask(__name__)
 CORS(app, resources={ r'/*': {'origins': config['ORIGINS']}}, supports_credentials=True)
 
 # Setup Postgres connection
-engine = create_engine(f'postgresql://postgres:{password}@localhost:5432/NYC_COVID19_CRIMES_DB')
+engine = create_engine(f'postgresql://postgres:postgres@localhost:5432/NYC_COVID19_CRIMES_DB')
 
 # Reflect an existing database into a new model
 Base = automap_base()
