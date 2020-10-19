@@ -1,1 +1,1 @@
-web: gunicorn --bind 0.0.0.0:$PORT Covid-and-Crime-in-NYC.app:app
+web: gunicorn Covid-and-Crime-in-NYC.app:app
