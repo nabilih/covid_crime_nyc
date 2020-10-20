@@ -5,7 +5,7 @@ class crime(db.Model):
     __tablename__ = 'crime'
 
     index = db.Column(db.Integer, primary_key=True)
-    Date = db.Column(db.date)
+    Date = db.Column(db.Date)
     ComplaintType = db.Column(db.String(1000))
     Descriptor = db.Column(db.String(1000))
     locationType = db.Column(db.String(1000))
@@ -24,7 +24,7 @@ class covid(db.Model):
 
     index = db.Column(db.Integer, primary_key=True)
     Borough = db.Column(db.String(1000))
-    Date = db.Column(db.date)
+    Date = db.Column(db.Date)
     TotalCrimes = db.Column(db.Integer)
     Cases = db.Column(db.Integer)
     Hospitalizations = db.Column(db.Integer)
@@ -39,7 +39,7 @@ class summary(db.Model):
     __tablename__ = 'summary'
 
     index = db.Column(db.Integer, primary_key=True)
-    Date = db.Column(db.date)
+    Date = db.Column(db.Date)
     TotalCases = db.Column(db.integer)
     TotalHospitalizations = db.Column(db.integer)
     TotalDeaths = db.Column(db.integer)
