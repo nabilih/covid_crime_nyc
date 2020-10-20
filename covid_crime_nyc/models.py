@@ -4,7 +4,7 @@ from .app import db
 class crime(db.Model):
     __tablename__ = 'crime'
 
-    index = db.Column(db.bigint, primary_key=True)
+    index = db.Column(db.Integer, primary_key=True)
     Date = db.Column(db.date)
     ComplaintType = db.Column(db.String(1000))
     Descriptor = db.Column(db.String(1000))
@@ -22,13 +22,13 @@ class crime(db.Model):
 class covid(db.Model):
     __tablename__ = 'covid'
 
-    index = db.Column(db.bigint, primary_key=True)
+    index = db.Column(db.Integer, primary_key=True)
     Borough = db.Column(db.String(1000))
     Date = db.Column(db.date)
-    TotalCrimes = db.Column(db.bigint)
-    Cases = db.Column(db.bigint)
-    Hospitalizations = db.Column(db.bigint)
-    Deaths = db.Column(db.bigint)
+    TotalCrimes = db.Column(db.Integer)
+    Cases = db.Column(db.Integer)
+    Hospitalizations = db.Column(db.Integer)
+    Deaths = db.Column(db.Integer)
     Latitude = db.Column(db.Float)
     Longitude = db.Column(db.Float)
   
@@ -38,16 +38,12 @@ class covid(db.Model):
 class summary(db.Model):
     __tablename__ = 'summary'
 
-    index = db.Column(db.bigint, primary_key=True)
+    index = db.Column(db.Integer, primary_key=True)
     Date = db.Column(db.date)
     TotalCases = db.Column(db.integer)
     TotalHospitalizations = db.Column(db.integer)
     TotalDeaths = db.Column(db.integer)
-    ComplaintType = db.Column(db.bigint)
-
-
-    Hospitalizations = db.Column(db.bigint)
-    Deaths = db.Column(db.bigint)
+    ComplaintType = db.Column(db.Integer)
     Latitude = db.Column(db.Float)
     Longitude = db.Column(db.Float)
   
