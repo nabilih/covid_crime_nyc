@@ -11,11 +11,6 @@ from sqlalchemy import create_engine, func
 from flask_cors import CORS
 
 
-  # DATABASE_URL will contain the database connection string:
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '')
-  # Connects to the database using the app config
-db = SQLAlchemy(app)
-
 # Key Things, added a few line to Jupyter lab
 # in SQL everyone has to run the following to add primary key
 # ALTER TABLE covid ADD PRIMARY KEY (index);
@@ -33,6 +28,11 @@ config = {
 }
 
 app = Flask(__name__)
+
+  # DATABASE_URL will contain the database connection string:
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '')
+  # Connects to the database using the app config
+db = SQLAlchemy(app)
 
 # Added for Mapping
 CORS(app, resources={ r'/*': {'origins': config['ORIGINS']}}, supports_credentials=True)
