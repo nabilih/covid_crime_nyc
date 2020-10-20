@@ -11,6 +11,11 @@ from sqlalchemy import create_engine, func
 from flask_cors import CORS
 
 
+  # DATABASE_URL will contain the database connection string:
+  app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '')
+  # Connects to the database using the app config
+  db = SQLAlchemy(app)
+
 # Key Things, added a few line to Jupyter lab
 # in SQL everyone has to run the following to add primary key
 # ALTER TABLE covid ADD PRIMARY KEY (index);
@@ -33,8 +38,8 @@ app = Flask(__name__)
 CORS(app, resources={ r'/*': {'origins': config['ORIGINS']}}, supports_credentials=True)
 
 # Setup Postgres connection
-engine = create_engine(f'postgresql://postgres:postgres@localhost:5432/NYC_COVID19_CRIMES_DB')
-
+#engine = create_engine(f'postgresql://postgres:postgres@localhost:5432/NYC_COVID19_CRIMES_DB')
+engine = create_engine(os.getenv("DATABASE_URL"))
 # Reflect an existing database into a new model
 Base = automap_base()
 
