@@ -1,1 +1,1 @@
-FLASK_APP=Covid-and-Crime-in-NYC/app.py flask run
+FLASK_APP=covid_crime_nyc/app.py flask run
