@@ -40,9 +40,9 @@ class summary(db.Model):
 
     index = db.Column(db.Integer, primary_key=True)
     Date = db.Column(db.Date)
-    TotalCases = db.Column(db.integer)
-    TotalHospitalizations = db.Column(db.integer)
-    TotalDeaths = db.Column(db.integer)
+    TotalCases = db.Column(db.Integer)
+    TotalHospitalizations = db.Column(db.Integer)
+    TotalDeaths = db.Column(db.Integer)
     ComplaintType = db.Column(db.Integer)
     Latitude = db.Column(db.Float)
     Longitude = db.Column(db.Float)
