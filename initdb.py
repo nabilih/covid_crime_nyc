@@ -1,2 +1,2 @@
-from Covid-and-Crime-in-NYC.app import db
+from covid_crime_nyc.app import db
 db.create_all()

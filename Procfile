@@ -1,1 +1,1 @@
-web: gunicorn Covid-and-Crime-in-NYC.app:app
+web: gunicorn covid_crime_nyc.app:app
