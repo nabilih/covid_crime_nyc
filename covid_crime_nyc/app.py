@@ -95,7 +95,7 @@ def covidfunc(date,borough):
 
     return jsonify(all_covid)
 
-Create the Covid-Crimes Jsonify Page
+# Create the Covid-Crimes Jsonify Page
 @app.route("/api/v1.0/covid_crime/<borough>")
 def covidcrimefunc(borough):
     # session = Session(engine)
