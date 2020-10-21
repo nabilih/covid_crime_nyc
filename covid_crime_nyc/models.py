@@ -44,8 +44,6 @@ class summary(db.Model):
     TotalHospitalizations = db.Column(db.Integer)
     TotalDeaths = db.Column(db.Integer)
     ComplaintType = db.Column(db.Integer)
-    Latitude = db.Column(db.Float)
-    Longitude = db.Column(db.Float)
   
     def __repr__(self):
         return '<summary %r>' % (self.name)

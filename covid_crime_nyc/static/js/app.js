@@ -30,9 +30,12 @@ function updateMap(selectedDate){
         accessToken: API_KEY
       }).addTo(myMap);
       
-      // Store API query variables
-      var url = `http://127.0.0.1:5000/api/v1.0/crime2_data/${selectedDate}`;
+      // Store API query variables for local api
+      // var url = `http://127.0.0.1:5000/api/v1.0/crime2_data/${selectedDate}`;
       
+      // store API query variable for Heroku api
+      var url = `https://covid-crime-nyc.herokuapp.com/api/v1.0/crime2_data/${selectedDate}`;
+
       // console.log(url);
 
       // Grab the data with d3
@@ -59,8 +62,11 @@ function updateMap(selectedDate){
 
       //Adding Covid Info to the map
      
-      var url = `http://127.0.0.1:5000/api/v1.0/covid_borough/${selectedDate}`;
+      //var url = `http://127.0.0.1:5000/api/v1.0/covid_borough/${selectedDate}`;
       
+      // For Heroku
+      var url = `https://covid-crime-nyc.herokuapp.com/api/v1.0/covid_borough/${selectedDate}`;
+
       // console.log(url);
 
       // Grab the data with d3
@@ -101,7 +107,7 @@ function updateMap(selectedDate){
       
       // Grabbing our GeoJSON data.
       d3.json(link).then(function(data) {
-          console.log(data);
+        //  console.log(data);
         // Creating a geoJSON layer with the retrieved data
         L.geoJson(data, {
           style: function(feature) {
@@ -118,7 +124,7 @@ function updateMap(selectedDate){
    
    
 // Setting initial values
-let selectedDate = '02/29/2020';
+let selectedDate = '05/01/2020';
 let selectedBorough = 'MANHATTAN';
 
 // Initial function

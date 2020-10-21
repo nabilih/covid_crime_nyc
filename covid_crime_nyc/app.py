@@ -40,27 +40,31 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-from .models import crime
-from .models import covid
-from .models import summary
+# from .models import crime
+# from .models import covid
+# from .models import summary
 
 
 # Added for Mapping
 CORS(app, resources={ r'/*': {'origins': config['ORIGINS']}}, supports_credentials=True)
 
-# Setup Postgres connection
+# Setup Postgres connection for local database
 #engine = create_engine(f'postgresql://postgres:postgres@localhost:5432/NYC_COVID19_CRIMES_DB')
 
+# set up Postgres connection for Heroku database
+engine = create_engine(os.environ.get('DATABASE_URL', ''))
+
+
 # Reflect an existing database into a new model
-# Base = automap_base()
+Base = automap_base()
 
 # Reflect the tables
-# Base.prepare(engine, reflect=True)
+Base.prepare(engine, reflect=True)
 
 # Save reference to the table
-# crime = Base.classes.crime
-# covid = Base.classes.covid
-# summary = Base.classes.summary
+crime = Base.classes.crime
+covid = Base.classes.covid
+summary = Base.classes.summary
 
 # Create the main page
 @app.route("/")
@@ -149,10 +153,10 @@ def crimedatefunc(date):
 # Create the Summary Jsonify Page
 @app.route("/api/v1.0/summary/")
 def summaryfunc():
-    # session = Session(engine)
-    results = db.session.query(summary.Date,summary.TotalCases,summary.TotalHospitalizations,summary.TotalDeaths,summary.ComplaintType).all()
+    session = Session(engine)
+    results = session.query(summary.Date,summary.TotalCases,summary.TotalHospitalizations,summary.TotalDeaths,summary.ComplaintType).all()
 
-    db.session.close()
+    session.close()
        
     all_summary = []
     for Date, TotalCases, TotalHospitalizations, TotalDeaths, ComplaintType in results:
@@ -173,10 +177,10 @@ def summaryfunc():
 
 def crimefunc(date,borough):
     
-    # session = Session(engine)
-    results = db.session.query(crime.Date,crime.Borough,crime.Latitude,crime.Longitude, crime.ComplaintType, crime.Descriptor, crime.locationType, crime.City, crime.incidentAddress).filter(crime.Date == date).filter(crime.Borough == borough).all()
+    session = Session(engine)
+    results = session.query(crime.Date,crime.Borough,crime.Latitude,crime.Longitude, crime.ComplaintType, crime.Descriptor, crime.locationType, crime.City, crime.incidentAddress).filter(crime.Date == date).filter(crime.Borough == borough).all()
 
-    db.session.close()
+    session.close()
     
     all_crime = []
     for Date, Borough, Latitude, Longitude, ComplaintType , Descriptor,  locationType, City,incidentAddress in results:
@@ -197,10 +201,10 @@ def crimefunc(date,borough):
 # Create the Covid Borough Jsonify Page
 @app.route("/api/v1.0/covid_borough/<path:date>")
 def covidboroughfunc(date):
-    # session = Session(engine)
-    results = db.session.query(covid.Date,covid.Cases,covid.Hospitalizations,covid.Deaths,covid.Borough, covid.Latitude, covid.Longitude, covid.TotalCrimes).filter(covid.Date == date).all()
+    session = Session(engine)
+    results = session.query(covid.Date,covid.Cases,covid.Hospitalizations,covid.Deaths,covid.Borough, covid.Latitude, covid.Longitude, covid.TotalCrimes).filter(covid.Date == date).all()
 
-    db.session.close()
+    session.close()
     
     all_covidBorough = []
     for Date, Cases, Hospitalizations, Deaths, Borough, Latitude, Longitude, TotalCrimes in results:
