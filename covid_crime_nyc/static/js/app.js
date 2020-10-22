@@ -69,6 +69,17 @@ function updateMap(selectedDate){
 
       // console.log(url);
 
+
+      var covidIcon = L.icon({
+        icon: "ion-settings",
+        iconColor: "white",
+        markerColor: "yellow",
+        shape: "star"
+      });
+    
+    L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);
+
+
       // Grab the data with d3
       d3.json(url).then((response) => {
       
@@ -77,10 +88,8 @@ function updateMap(selectedDate){
         // Loop through data
         for (var i = 0; i < response.length; i++) {
       
-            // Add a new marker to the cluster group and bind a pop-up
-            L.marker([response[i].Latitude, response[i].Longitude])
-            .bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
-      
+          // Add a new marker to the cluster group and bind a pop-up
+          L.marker([response[i].Latitude, response[i].Longitude], {icon: covidIcon}).bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
         }   
       });
 
@@ -194,13 +203,13 @@ function init() {
     // Layout for line chart
     var layout_line = {
         title: {
-          text: "New York City COVID-19 and crime",
+          text: "New York City COVID-19 and Crime",
           font: {     
                 family: 'Times New Roman, Times, serif',
                 color: '#45358d',
-                size: 24
+                size: 18
         }},
-        height: 500,
+        height: 400,
         width: 1100,        
     };
 
@@ -231,10 +240,10 @@ function init() {
           font: {     
                 family: 'Times New Roman, Times, serif',
                 color: '#45358d',
-                size: 24
+                size: 18
         }},
 
-        height: 500,
+        height: 400,
         width: 1100
     };
 
@@ -287,7 +296,7 @@ function updateCharts(selectedDate, selectedBorough){
               font: {     
                     family: 'Times New Roman, Times, serif',
                     color: '#45358d',
-                    size: 24
+                    size: 18
             }},
             height: 400,
             width: 620
@@ -336,7 +345,7 @@ function updateCharts(selectedDate, selectedBorough){
               text: `${selectedBorough} COVID-19 at ${selectedDate}`,
               fontFamily: 'Times New Roman, Times, serif',
               fontColor : '#45358d',
-              fontSize: 24,
+              fontSize: 18,
               fontStyle: 'normal',
 
               position: "top",
@@ -447,9 +456,9 @@ function updateCharts(selectedDate, selectedBorough){
               font: {     
                     family: 'Times New Roman, Times, serif',
                     color: '#45358d',
-                    size: 24
+                    size: 18
             }},
-            height: 500,
+            height: 400,
             width: 1100
         };
     
