@@ -77,9 +77,6 @@ function updateMap(selectedDate){
         shape: "star"
       });
     
-    L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);
-
-
       // Grab the data with d3
       d3.json(url).then((response) => {
       
