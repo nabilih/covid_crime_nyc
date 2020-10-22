@@ -71,7 +71,6 @@ function updateMap(selectedDate){
 
 
       var covidIcon = L.icon({
-        icon: "ion-settings",
         iconColor: "white",
         markerColor: "yellow",
         shape: "star"
@@ -85,8 +84,10 @@ function updateMap(selectedDate){
         // Loop through data
         for (var i = 0; i < response.length; i++) {
       
+          newMarker = L.marker.valueOf()._icon.style.backgroundColor = 'green';
+          newMarker([response[i].Latitude, response[i].Longitude]).bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
           // Add a new marker to the cluster group and bind a pop-up
-          L.marker([response[i].Latitude, response[i].Longitude], {icon: covidIcon}).bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
+          //L.marker([response[i].Latitude, response[i].Longitude], {icon: covidIcon}).bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
         }   
       });
 
