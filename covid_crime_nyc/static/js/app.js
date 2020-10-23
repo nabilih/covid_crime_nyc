@@ -158,10 +158,10 @@ function init() {
       .property("value", d.Date);
 
       dateList.push(d.Date);
-        caseList.push(d.Cases);
-        hospitalizationList.push(d.Hospitalizations);
-        deathList.push(d.Deaths);
-        crimeList.push(d.ComplaintType);
+      caseList.push(d.Cases);
+      hospitalizationList.push(d.Hospitalizations);
+      deathList.push(d.Deaths);
+      crimeList.push(d.ComplaintType);
 
     });
 
