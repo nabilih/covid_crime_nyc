@@ -88,7 +88,7 @@ def covidfunc(date,borough):
     all_covid = []
     for Date, Cases, Hospitalizations, Deaths, Borough, Latitude, Longitude, TotalCrimes in results:
         covid_dict = {}
-        covid_dict["Date"] = Date
+        covid_dict["Date"] = Date.strftime('%Y-%m-%d')
         covid_dict["Cases"] = Cases
         covid_dict["Hospitalizations"] = Hospitalizations
         covid_dict["Deaths"] = Deaths
@@ -113,7 +113,7 @@ def covidcrimefunc(borough):
     all_covid_crime = []
     for Date, Cases, Hospitalizations, Deaths, Borough, Latitude, Longitude, TotalCrimes in results:
         covidcrime_dict = {}
-        covidcrime_dict["Date"] = Date
+        covidcrime_dict["Date"] = Date.strftime('%Y-%m-%d')
         covidcrime_dict["Cases"] = Cases
         covidcrime_dict["Hospitalizations"] = Hospitalizations
         covidcrime_dict["Deaths"] = Deaths
@@ -140,7 +140,8 @@ def crimedatefunc(date):
     crime_map = []
     for Date, Borough, Latitude, Longitude, ComplaintType, Descriptor, locationType, City,incidentAddress in results:
         crime_dict = {}
-        crime_dict["Date"] = Date
+        # crime_dict["Date"] = Date
+        crime_dict["Date"] = Date.strftime('%Y-%m-%d')
         crime_dict["Borough"] = Borough
         crime_dict["Latitude"] = Latitude
         crime_dict["Longitude"] = Longitude
@@ -165,7 +166,8 @@ def summaryfunc():
     for Date, TotalCases, TotalHospitalizations, TotalDeaths, ComplaintType in results:
 
         summary_dict = {}
-        summary_dict["Date"] = Date
+        summary_dict["Date"] = Date.strftime('%Y-%m-%d')
+        
         summary_dict["Cases"] = TotalCases
         summary_dict["Hospitalizations"] = TotalHospitalizations
         summary_dict["Deaths"] = TotalDeaths
@@ -188,7 +190,7 @@ def crimefunc(date,borough):
     all_crime = []
     for Date, Borough, Latitude, Longitude, ComplaintType , Descriptor,  locationType, City,incidentAddress in results:
         crime_dict = {}
-        crime_dict["Date"] = Date
+        crime_dict["Date"] = Date.strftime('%Y-%m-%d')
         crime_dict["Borough"] = Borough
         crime_dict["Latitude"] = Latitude
         crime_dict["Longitude"] = Longitude
@@ -212,7 +214,7 @@ def covidboroughfunc(date):
     all_covidBorough = []
     for Date, Cases, Hospitalizations, Deaths, Borough, Latitude, Longitude, TotalCrimes in results:
         covidBorough_dict = {}
-        covidBorough_dict["Date"] = Date
+        covidBorough_dict["Date"] = Date.strftime('%Y-%m-%d')
         covidBorough_dict["Cases"] = Cases
         covidBorough_dict["Hospitalizations"] = Hospitalizations
         covidBorough_dict["Deaths"] = Deaths
