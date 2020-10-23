@@ -211,7 +211,7 @@ function init() {
                 color: '#45358d',
                 size: 18
         }},
-        height: 200,
+        height: 400,
         width: 1100,        
     };
 
