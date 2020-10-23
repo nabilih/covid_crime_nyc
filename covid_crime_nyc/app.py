@@ -166,7 +166,7 @@ def summaryfunc():
     for Date, TotalCases, TotalHospitalizations, TotalDeaths, ComplaintType in results:
 
         summary_dict = {}
-        summary_dict["Date"] = Date.strftime('%m/%d/%Y')
+        summary_dict["Date"] = Date
         
         summary_dict["Cases"] = TotalCases
         summary_dict["Hospitalizations"] = TotalHospitalizations
