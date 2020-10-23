@@ -151,9 +151,9 @@ td {
   width: 98%;
   background-color: #fff;
   align-content: center;
-  /* border-radius: 10px;
+  border-radius: 10px;
   padding: 4px;
-  box-shadow: 2px 2px 10px   rgb(87, 87, 87); */
+  box-shadow: 2px 2px 10px   rgb(87, 87, 87);
 }
 
 .the-chart-left {
