@@ -38,7 +38,8 @@ function updateMap(selectedDate){
         // Store API query variables for local api
         var url = `http://127.0.0.1:5000/api/v1.0/crime2_data/${selectedDate}`;
       }
-      console.log(url);
+
+      // console.log(url);
 
       // Grab the data with d3
       d3.json(url).then((response) => {
@@ -68,30 +69,21 @@ function updateMap(selectedDate){
       }else {
         var url = `http://127.0.0.1:5000/api/v1.0/covid_borough/${selectedDate}`;
       }
-  
-      console.log(url);
-
-      var myIcon = L.divIcon({
-        className: 'my-div-icon',
-        iconSize: [5, 5]
-      });
-
       
+      // console.log(url);
+
       // Grab the data with d3
       d3.json(url).then((response) => {
       
-        console.log(response);
+        // console.log(response);
       
         // Loop through data
         for (var i = 0; i < response.length; i++) {
       
-          // newMarker = L.marker.valueOf()._icon.style.backgroundColor = 'green';
-          var newMarkter = L.Marker([response[i].Latitude, response[i].Longitude], {icon: icon.shape = 'star'}).bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
-          // newMarker._icon.style.color = 'green';
-          // newMarker._icon.style.shape = 'star';
-          // NewMarker.addTo(myMap);
-          // Add a new marker to the cluster group and bind a pop-up
-          // L.marker([response[i].Latitude, response[i].Longitude], {icon: covidIcon}).bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
+            // Add a new marker to the cluster group and bind a pop-up
+            L.marker([response[i].Latitude, response[i].Longitude])
+            .bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
+      
         }   
       });
 
@@ -118,7 +110,7 @@ function updateMap(selectedDate){
       
       // Grabbing our GeoJSON data.
       d3.json(link).then(function(data) {
-        //  console.log(data);
+          console.log(data);
         // Creating a geoJSON layer with the retrieved data
         L.geoJson(data, {
           style: function(feature) {
@@ -153,15 +145,15 @@ function init() {
 
     //add the dates from summary table into drop-down box 
     data.forEach(function(d) {
-      userSelection.append("option")
-      .text(d.Date)
-      .property("value", d.Date);
+        userSelection.append("option")
+        .text(d.Date)
+        .property("value", d.Date);
 
-      dateList.push(d.Date);
-      caseList.push(d.Cases);
-      hospitalizationList.push(d.Hospitalizations);
-      deathList.push(d.Deaths);
-      crimeList.push(d.ComplaintType);
+        dateList.push(d.Date);
+        caseList.push(d.Cases);
+        hospitalizationList.push(d.Hospitalizations);
+        deathList.push(d.Deaths);
+        crimeList.push(d.ComplaintType);
 
     });
 
@@ -205,13 +197,13 @@ function init() {
     // Layout for line chart
     var layout_line = {
         title: {
-          text: "New York City COVID-19 and Crime Data",
+          text: "New York City COVID-19 and crime",
           font: {     
                 family: 'Times New Roman, Times, serif',
                 color: '#45358d',
-                size: 18
+                size: 24
         }},
-        height: 400,
+        height: 500,
         width: 1100,        
     };
 
@@ -238,14 +230,14 @@ function init() {
     // Layout for Bar Stacked chart
     var layout_bar = {
          title: {
-          text: "New York City Positive Cases versus Crime Incidents",
+          text: "New York City Positive Cases and Crime",
           font: {     
                 family: 'Times New Roman, Times, serif',
                 color: '#45358d',
-                size: 18
+                size: 24
         }},
 
-        height: 400,
+        height: 500,
         width: 1100
     };
 
@@ -298,7 +290,7 @@ function updateCharts(selectedDate, selectedBorough){
               font: {     
                     family: 'Times New Roman, Times, serif',
                     color: '#45358d',
-                    size: 18
+                    size: 24
             }},
             height: 400,
             width: 620
@@ -347,7 +339,7 @@ function updateCharts(selectedDate, selectedBorough){
               text: `${selectedBorough} COVID-19 at ${selectedDate}`,
               fontFamily: 'Times New Roman, Times, serif',
               fontColor : '#45358d',
-              fontSize: 18,
+              fontSize: 24,
               fontStyle: 'normal',
 
               position: "top",
@@ -404,12 +396,11 @@ function updateCharts(selectedDate, selectedBorough){
         var crimeList = [];
 
         covidCrimes.forEach(function(d) {
-
-          dateList.push(d.Date);
-          caseList.push(d.Cases);
-          hospitalizationList.push(d.Hospitalizations);
-          deathList.push(d.Deaths);
-          crimeList.push(d.TotalCrimes);
+            dateList.push(d.Date);
+            caseList.push(d.Cases);
+            hospitalizationList.push(d.Hospitalizations);
+            deathList.push(d.Deaths);
+            crimeList.push(d.TotalCrimes);
         });
     
         var labels = ['Positive Cases', 'Hospitalizations', 'Deaths', 'Crimes'];
@@ -459,9 +450,9 @@ function updateCharts(selectedDate, selectedBorough){
               font: {     
                     family: 'Times New Roman, Times, serif',
                     color: '#45358d',
-                    size: 18
+                    size: 24
             }},
-            height: 400,
+            height: 500,
             width: 1100
         };
     
