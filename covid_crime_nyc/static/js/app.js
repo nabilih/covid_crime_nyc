@@ -86,7 +86,7 @@ function updateMap(selectedDate){
         for (var i = 0; i < response.length; i++) {
       
           // newMarker = L.marker.valueOf()._icon.style.backgroundColor = 'green';
-          var newMarkter = L.Marker([response[i].Latitude, response[i].Longitude], {icon: icon.style.shape = 'star'}).bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
+          var newMarkter = L.Marker([response[i].Latitude, response[i].Longitude], {icon: icon.shape = 'star'}).bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
           // newMarker._icon.style.color = 'green';
           // newMarker._icon.style.shape = 'star';
           // NewMarker.addTo(myMap);
@@ -415,8 +415,8 @@ function updateCharts(selectedDate, selectedBorough){
 
         covidCrimes.forEach(function(d) {
 
-          var dt = moment(new Date(d.date.substr(0,9)));
-          
+          // var dt = moment(new Date(d.date.substr(0,9)));
+          var dt = Date.strptime(d.Date, "%m/%d/%y")
           console.log(dt);
 
           dateList.push(dt);
