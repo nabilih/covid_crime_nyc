@@ -1,4 +1,4 @@
-var isHeroku = false;
+var isHeroku = true;
 
 // Get all buttons with class="btn" 
 var btns = document.getElementsByClassName("btn");

@@ -17,7 +17,7 @@ from flask_cors import CORS
 # ALTER TABLE crime ADD PRIMARY KEY (index);
 # ALTER TABLE summary ADD PRIMARY KEY (index);
 
-isHeroku = False
+isHeroku = True
 
 ## Added for Mapping
 config = {
