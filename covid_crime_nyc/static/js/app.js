@@ -153,21 +153,11 @@ function init() {
 
     //add the dates from summary table into drop-down box 
     data.forEach(function(d) {
-        // userSelection.append("option")
-        // .text(d.Date)
-        // .property("value", d.Date);
+      userSelection.append("option")
+      .text(d.Date)
+      .property("value", d.Date);
 
-        // dateList.push(d.Date);
-
-        var dt = moment(new Date(d.date.substr(0, 9)));
-        console.log(dt);
-        dateList.push(dt);
-        userSelection.append("option")
-        .text(dt)
-        .property("value", d.date); 
-
-        // dateList.push(moment(new Date(d.date.substr(0, 16))).format("DD-MMM-YYYY"));
-        
+      dateList.push(d.Date);
         caseList.push(d.Cases);
         hospitalizationList.push(d.Hospitalizations);
         deathList.push(d.Deaths);
@@ -415,16 +405,7 @@ function updateCharts(selectedDate, selectedBorough){
 
         covidCrimes.forEach(function(d) {
 
-          // var dt = moment(new Date(d.date.substr(0,9)));
-          var dt = Date.strptime(d.Date, "%m/%d/%y")
-          console.log(dt);
-
-          dateList.push(dt);
-          userSelection.append("option")
-          .text(dt)
-          .property("value", d.date); 
-
-          // dateList.push(d.Date);
+          dateList.push(d.Date);
           caseList.push(d.Cases);
           hospitalizationList.push(d.Hospitalizations);
           deathList.push(d.Deaths);
