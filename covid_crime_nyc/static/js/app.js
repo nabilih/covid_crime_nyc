@@ -1,3 +1,4 @@
+var isHeroku = false;
 
 // Get all buttons with class="btn" 
 var btns = document.getElementsByClassName("btn");
@@ -30,13 +31,14 @@ function updateMap(selectedDate){
         accessToken: API_KEY
       }).addTo(myMap);
       
-      // Store API query variables for local api
-      // var url = `http://127.0.0.1:5000/api/v1.0/crime2_data/${selectedDate}`;
-      
-      // store API query variable for Heroku api
-      var url = `https://covid-crime-nyc.herokuapp.com/api/v1.0/crime2_data/${selectedDate}`;
-
-      // console.log(url);
+      if (isHeroku) {
+        // store API query variable for Heroku api
+        var url = `https://covid-crime-nyc.herokuapp.com/api/v1.0/crime2_data/${selectedDate}`;        
+      }else {
+        // Store API query variables for local api
+        var url = `http://127.0.0.1:5000/api/v1.0/crime2_data/${selectedDate}`;
+      }
+      console.log(url);
 
       // Grab the data with d3
       d3.json(url).then((response) => {
@@ -61,33 +63,35 @@ function updateMap(selectedDate){
       });
 
       //Adding Covid Info to the map
-     
-      //var url = `http://127.0.0.1:5000/api/v1.0/covid_borough/${selectedDate}`;
-      
-      // For Heroku
-      var url = `https://covid-crime-nyc.herokuapp.com/api/v1.0/covid_borough/${selectedDate}`;
+      if (isHeroku) {
+        var url = `https://covid-crime-nyc.herokuapp.com/api/v1.0/covid_borough/${selectedDate}`;
+      }else {
+        var url = `http://127.0.0.1:5000/api/v1.0/covid_borough/${selectedDate}`;
+      }
+  
+      console.log(url);
 
-      // console.log(url);
-
-
-      var covidIcon = L.icon({
-        iconColor: "white",
-        markerColor: "yellow",
-        shape: "star"
+      var myIcon = L.divIcon({
+        className: 'my-div-icon',
+        iconSize: [5, 5]
       });
-    
+
+      
       // Grab the data with d3
       d3.json(url).then((response) => {
       
-        // console.log(response);
+        console.log(response);
       
         // Loop through data
         for (var i = 0; i < response.length; i++) {
       
-          newMarker = L.marker.valueOf()._icon.style.backgroundColor = 'green';
-          newMarker([response[i].Latitude, response[i].Longitude]).bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
+          // newMarker = L.marker.valueOf()._icon.style.backgroundColor = 'green';
+          var newMarkter = L.Marker([response[i].Latitude, response[i].Longitude], {icon: icon.style.shape = 'star'}).bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
+          // newMarker._icon.style.color = 'green';
+          // newMarker._icon.style.shape = 'star';
+          // NewMarker.addTo(myMap);
           // Add a new marker to the cluster group and bind a pop-up
-          //L.marker([response[i].Latitude, response[i].Longitude], {icon: covidIcon}).bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
+          // L.marker([response[i].Latitude, response[i].Longitude], {icon: covidIcon}).bindPopup("<h5><b>Borough: "+response[i].Borough+"</b></h5><h6><b>Positive Cases: </b>"+response[i].Cases+"</h6><h6><b>Hospitalizations: </b>"+response[i].Hospitalizations+"</h6><h6><b>Deaths: </b>"+response[i].Deaths+"</h6>").addTo(myMap);
         }   
       });
 
@@ -149,11 +153,21 @@ function init() {
 
     //add the dates from summary table into drop-down box 
     data.forEach(function(d) {
-        userSelection.append("option")
-        .text(d.Date)
-        .property("value", d.Date);
+        // userSelection.append("option")
+        // .text(d.Date)
+        // .property("value", d.Date);
 
-        dateList.push(d.Date);
+        // dateList.push(d.Date);
+
+        var dt = moment(new Date(d.date.substr(0, 16))).format("DD-MMM-YYYY");
+            
+        dateList.push(dt);
+        userSelection.append("option")
+        .text(dt)
+        .property("value", d.date); 
+
+        // dateList.push(moment(new Date(d.date.substr(0, 16))).format("DD-MMM-YYYY"));
+        
         caseList.push(d.Cases);
         hospitalizationList.push(d.Hospitalizations);
         deathList.push(d.Deaths);
@@ -201,13 +215,13 @@ function init() {
     // Layout for line chart
     var layout_line = {
         title: {
-          text: "New York City COVID-19 and Crime",
+          text: "New York City COVID-19 and Crime Data",
           font: {     
                 family: 'Times New Roman, Times, serif',
                 color: '#45358d',
                 size: 18
         }},
-        height: 400,
+        height: 200,
         width: 1100,        
     };
 
@@ -234,7 +248,7 @@ function init() {
     // Layout for Bar Stacked chart
     var layout_bar = {
          title: {
-          text: "New York City Positive Cases and Crime",
+          text: "New York City Positive Cases versus Crime Incidents",
           font: {     
                 family: 'Times New Roman, Times, serif',
                 color: '#45358d',
@@ -400,11 +414,19 @@ function updateCharts(selectedDate, selectedBorough){
         var crimeList = [];
 
         covidCrimes.forEach(function(d) {
-            dateList.push(d.Date);
-            caseList.push(d.Cases);
-            hospitalizationList.push(d.Hospitalizations);
-            deathList.push(d.Deaths);
-            crimeList.push(d.TotalCrimes);
+
+          var dt = moment(new Date(d.date.substr(0, 16))).format("DD-MMM-YYYY");
+            
+          dateList.push(dt);
+          userSelection.append("option")
+          .text(dt)
+          .property("value", d.date); 
+
+          // dateList.push(d.Date);
+          caseList.push(d.Cases);
+          hospitalizationList.push(d.Hospitalizations);
+          deathList.push(d.Deaths);
+          crimeList.push(d.TotalCrimes);
         });
     
         var labels = ['Positive Cases', 'Hospitalizations', 'Deaths', 'Crimes'];

@@ -17,6 +17,8 @@ from flask_cors import CORS
 # ALTER TABLE crime ADD PRIMARY KEY (index);
 # ALTER TABLE summary ADD PRIMARY KEY (index);
 
+isHeroku = False
+
 ## Added for Mapping
 config = {
   'ORIGINS': [
@@ -48,12 +50,12 @@ db = SQLAlchemy(app)
 # Added for Mapping
 CORS(app, resources={ r'/*': {'origins': config['ORIGINS']}}, supports_credentials=True)
 
-# Setup Postgres connection for local database
-#engine = create_engine(f'postgresql://postgres:postgres@localhost:5432/NYC_COVID19_CRIMES_DB')
-
-# set up Postgres connection for Heroku database
-engine = create_engine(os.environ.get('DATABASE_URL', ''))
-
+if isHeroku == True:
+    # set up Postgres connection for Heroku database
+    engine = create_engine(os.environ.get('DATABASE_URL', ''))
+else:
+    # Setup Postgres connection for local database
+    engine = create_engine(f'postgresql://postgres:postgres@localhost:5432/NYC_COVID19_CRIMES_DB')
 
 # Reflect an existing database into a new model
 Base = automap_base()
@@ -74,12 +76,13 @@ def welcome():
 # Create the Covid-19 Jsonify Page
 @app.route("/api/v1.0/covid_data/<path:date>/<borough>")
 def covidfunc(date,borough):
-    # session = Session(engine)
-    # results = session.query(covid.Date,covid.Cases,covid.Hospitalizations,covid.Deaths,covid.Borough, covid.Latitude, covid.Longitude, covid.TotalCrimes).filter(covid.Date == date).filter(covid.Borough == borough).all()
-    results = db.session.query(covid.Date,covid.Cases,covid.Hospitalizations,covid.Deaths,covid.Borough, covid.Latitude, covid.Longitude, covid.TotalCrimes).filter(covid.Date == date).filter(covid.Borough == borough).all()
 
+    session = Session(engine)
+    # results = session.query(covid.Date,covid.Cases,covid.Hospitalizations,covid.Deaths,covid.Borough, covid.Latitude, covid.Longitude, covid.TotalCrimes).filter(covid.Date == date).filter(covid.Borough == borough).all()
+    results = session.query(covid.Date,covid.Cases,covid.Hospitalizations,covid.Deaths,covid.Borough, covid.Latitude, covid.Longitude, covid.TotalCrimes).filter(covid.Date == date).filter(covid.Borough == borough).all()
+        
     #session.close()
-    db.session.close()
+    session.close()
 
     
     all_covid = []
@@ -102,10 +105,10 @@ def covidfunc(date,borough):
 # Create the Covid-Crimes Jsonify Page
 @app.route("/api/v1.0/covid_crime/<borough>")
 def covidcrimefunc(borough):
-    # session = Session(engine)
-    results = db.session.query(covid.Date,covid.Cases,covid.Hospitalizations,covid.Deaths,covid.Borough, covid.Latitude, covid.Longitude, covid.TotalCrimes).filter(covid.Borough == borough).all()
+    session = Session(engine)
+    results = session.query(covid.Date,covid.Cases,covid.Hospitalizations,covid.Deaths,covid.Borough, covid.Latitude, covid.Longitude, covid.TotalCrimes).filter(covid.Borough == borough).all()
 
-    db.session.close()
+    session.close()
        
     all_covid_crime = []
     for Date, Cases, Hospitalizations, Deaths, Borough, Latitude, Longitude, TotalCrimes in results:
@@ -120,7 +123,7 @@ def covidcrimefunc(borough):
         covidcrime_dict["TotalCrimes"] = TotalCrimes
         all_covid_crime.append(covidcrime_dict)
     
-    # print(covidcrime_dict)
+    # print(all_covid_crime)
 
     return jsonify(all_covid_crime)
 
@@ -129,13 +132,13 @@ def covidcrimefunc(borough):
 
 def crimedatefunc(date):
     
-    # session = Session(engine)
-    results = db.session.query(crime.Date,crime.Borough,crime.Latitude,crime.Longitude, crime.ComplaintType, crime.Descriptor, crime.locationType, crime.City, crime.incidentAddress).filter(crime.Date == date).all()
+    session = Session(engine)
+    results = session.query(crime.Date,crime.Borough,crime.Latitude,crime.Longitude, crime.ComplaintType, crime.Descriptor, crime.locationType, crime.City, crime.incidentAddress).filter(crime.Date == date).all()
 
-    db.session.close()
+    session.close()
     
     crime_map = []
-    for Date, Borough, Latitude, Longitude, ComplaintType , Descriptor,  locationType, City,incidentAddress in results:
+    for Date, Borough, Latitude, Longitude, ComplaintType, Descriptor, locationType, City,incidentAddress in results:
         crime_dict = {}
         crime_dict["Date"] = Date
         crime_dict["Borough"] = Borough
