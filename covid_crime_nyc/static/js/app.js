@@ -160,7 +160,7 @@ function init() {
         // dateList.push(d.Date);
 
         var dt = moment(new Date(d.date.substr(0, 9)));
-
+        console.log(dt);
         dateList.push(dt);
         userSelection.append("option")
         .text(dt)
@@ -416,7 +416,9 @@ function updateCharts(selectedDate, selectedBorough){
         covidCrimes.forEach(function(d) {
 
           var dt = moment(new Date(d.date.substr(0,9)));
-            
+          
+          console.log(dt);
+
           dateList.push(dt);
           userSelection.append("option")
           .text(dt)
