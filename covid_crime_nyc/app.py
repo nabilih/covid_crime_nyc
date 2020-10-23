@@ -141,7 +141,7 @@ def crimedatefunc(date):
     for Date, Borough, Latitude, Longitude, ComplaintType, Descriptor, locationType, City,incidentAddress in results:
         crime_dict = {}
         # crime_dict["Date"] = Date
-        crime_dict["Date"] = Date.strftime('%M/%D/%Y')
+        crime_dict["Date"] = Date.strftime('%m/%d/%y')
         crime_dict["Borough"] = Borough
         crime_dict["Latitude"] = Latitude
         crime_dict["Longitude"] = Longitude
@@ -166,7 +166,7 @@ def summaryfunc():
     for Date, TotalCases, TotalHospitalizations, TotalDeaths, ComplaintType in results:
 
         summary_dict = {}
-        summary_dict["Date"] = Date.strftime('%M/%D/%Y')
+        summary_dict["Date"] = Date.strftime('%m/%d/%Y')
         
         summary_dict["Cases"] = TotalCases
         summary_dict["Hospitalizations"] = TotalHospitalizations
